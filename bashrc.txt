@@ -1,0 +1,86 @@
+# .bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+fi
+
+# User specific aliases and functions
+
+if [ $HOSTNAME == "smokeping01.scs.myyearbook.com" ]; then
+  PATH=$PATH:/usr/local/erlang/bin
+  export PATH
+fi
+
+export LS_OPTIONS='--color=auto'
+eval `dircolors`
+alias ls='ls $LS_OPTIONS'
+alias ll='ls $LS_OPTIONS -l'
+alias l='ls $LS_OPTIONS -lA'
+
+alias SN="sudo /usr/sbin/dmidecode|grep -A 3 'Product Name'"
+alias lc="cl"
+alias lt="ls -ltr"
+alias hh="history | grep -i"
+alias hpv='sudo /usr/sbin/hpaducli -v'
+alias hptxt='sudo /usr/sbin/hpaducli -f /home/dsplan/HP_logfiles/hpaducli_`uname -n`_$(date "+%Y%m%d-%H%M%S").txt'
+alias hpzip='sudo /usr/sbin/hpaducli -v -f /home/dsplan/HP_logfiles/hpaducli_`uname -n`_$(date "+%Y%m%d-%H%M%S").zip'
+alias nano="nano -w"
+alias dset="sudo /home/dsplan/dell/dset  --nologs --time --advanced -f /home/dsplan/dell_dset/"
+alias megalogr='sudo /usr/sbin/MegaLogR -FwTermLog -Dsply --aALL > /home/dsplan/dell_dset/MegaLogR_`uname -n`_$(date "+%Y%m%d-%H%M%S").txt'
+alias dirsize=' du -s $(ls -d */) 2>/dev/null |sort -nr'
+
+alias l="clear && \
+ls \
+--almost-all \
+--color=always \
+--classify \
+--group-directories-first \
+--human-readable \
+-l \
+--literal \
+--hide-control-chars \
+--time-style=local \
+-v \
+-t \
+-r \
+"
+
+function ssh () {
+  if [ $# = 0 ]; then
+    echo 'This ssh logs to ~/ssh_logfiles'
+  else
+    script -a -c "/usr/bin/ssh $1" -q ~/ssh_logfiles/$1_$(date "+%Y%m%d-%H%M%S").txt
+  fi
+}
+
+function cl () {
+   if [ $# = 0 ]; then
+      cd && ll
+   else
+      cd "$*" && lt
+   fi
+}
+
+function mc() {
+  mkdir -p "$*" && cd "$*" && pwd
+}
+
+function show_time() {
+  echo "${COLOR_YELLOW}$(date +%H:%M)${COLOR_NONE}"
+}
+
+export GREP_OPTIONS='--color=auto'
+export GREP_COLOR='1;32'
+
+
+export HISTFILESIZE=1000000000
+export HISTSIZE=1000000
+
+export HISTIGNORE="&:[ ]*:exit"
+export HISTTIMEFORMAT="[ %Y-%m-%d %H:%M:%S ] "
+export HISTCONTROL=ignoreboth:erasedups
+
+shopt -s histappend
+
+export PROMPT_COMMAND=`history -a ;history -n ;history -w`
