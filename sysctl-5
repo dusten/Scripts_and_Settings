@@ -1,0 +1,17 @@
+echo 0 > /proc/sys/net/ipv4/tcp_timestamps
+echo "1024 65535" > /proc/sys/net/ipv4/ip_local_port_range
+echo 1 > /proc/sys/net/ipv4/tcp_syncookies
+echo 2 > /proc/sys/net/ipv4/tcp_orphan_retries
+echo 1800000 > /proc/sys/net/ipv4/tcp_max_tw_buckets
+echo 1 > /proc/sys/net/ipv4/tcp_tw_recycle
+echo 30 > /proc/sys/net/ipv4/tcp_fin_timeout
+echo "128000 200000 262144" > /proc/sys/net/ipv4/tcp_mem  # 1Gb
+echo 2097152 > /proc/sys/fs/file-max
+
+echo 5  > /proc/sys/net/ipv4/tcp_fin_timeout  # Benchmarking / Stressing
+
+echo "50576 64768 98152"    > /proc/sys/net/ipv4/tcp_mem
+echo "128000 200000 262144" > /proc/sys/net/ipv4/tcp_mem  # 1Gb
+
+echo 32767   > /proc/sys/fs/file-max
+echo 2097152 > /proc/sys/fs/file-max
